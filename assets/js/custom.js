@@ -1,371 +1,222 @@
-/*
-| ----------------------------------------------------------------------------------
-| TABLE OF CONTENT
-| ----------------------------------------------------------------------------------
--Preloader
--Scroll Animation
--Scale images
--Chars Start
--Loader blocks
--Zoom Images
--Select customization
--Main slider
--Sliders
--Sliders with thumbnails
--Slider numbers
--Video player
--View catalog
-*/
-
-
-
-$(document).ready(function() {
-
-    "use strict";
-
-
-
-/////////////////////////////////////////////////////////////////
-// Preloader
-/////////////////////////////////////////////////////////////////
-
-
-    var $preloader = $('#page-preloader'),
-    $spinner   = $preloader.find('.spinner-loader');
-    $spinner.fadeOut();
-    $preloader.delay(50).fadeOut('slow');
-
-
-/////////////////////////////////////
-//  Scroll Animation
-/////////////////////////////////////
-
-
-if ($('.scrollreveal').length) {
-    window.sr = ScrollReveal({
-        reset:true,
-        duration: 1000,
-        delay: 200
-    });
-
-    sr.reveal('.scrollreveal');
-  }
-
-
-/////////////////////////////////////////////////////////////////
-// Scale images
-/////////////////////////////////////////////////////////////////
-
-  if ($('.img-scale').length) {
-    $(function () { objectFitImages('.img-scale') });
-  }
-
-
-/////////////////////////////////////
-//  Chars Start
-/////////////////////////////////////
-
-
-if ($('body').length) {
-    $(window).on('scroll', function() {
-        var winH = $(window).scrollTop();
-
-        $('.b-progress-list').waypoint(function() {
-            $('.js-chart').each(function() {
-                CharsStart();
-            });
-        }, {
-            offset: '80%'
-        });
-    });
-}
-
-
-function CharsStart() {
-
-    $('.js-chart').easyPieChart({
-        barColor: false,
-        trackColor: false,
-        scaleColor: false,
-        scaleLength: false,
-        lineCap: false,
-        lineWidth: false,
-        size: false,
-        animate: 5000,
-
-        onStep: function(from, to, percent) {
-            $(this.el).find('.js-percent').text(Math.round(percent));
-        }
-    });
-}
-
-    
-    
-    
-
-
-
-/////////////////////////////////////
-//  Loader blocks
-/////////////////////////////////////
-
-    $( ".js-scroll-next" ).on( "click", function() {
-
-        var hiddenContent =  $( ".js-scroll-next + .js-scroll-content") ;
-
-        $(".js-scroll-next").hide() ;
-        hiddenContent.show() ;
-        hiddenContent.addClass("animated");
-        hiddenContent.addClass("animation-done");
-        hiddenContent.addClass("bounceInUp");
-
-    });
-
-
-
-/////////////////////////////////////
-//  Zoom Images
-/////////////////////////////////////
-
-  if ($('.js-zoom-gallery').length) {
-      $('.js-zoom-gallery').each(function() { // the containers for all your galleries
-          $(this).magnificPopup({
-              delegate: '.js-zoom-gallery__item', // the selector for gallery item
-              type: 'image',
-              gallery: {
-                enabled:true
-              },
-        mainClass: 'mfp-with-zoom', // this class is for CSS animation below
-
-        zoom: {
-          enabled: true, // By default it's false, so don't forget to enable it
-
-          duration: 300, // duration of the effect, in milliseconds
-          easing: 'ease-in-out', // CSS transition easing function
-
-          // The "opener" function should return the element from which popup will be zoomed in
-          // and to which popup will be scaled down
-          // By defailt it looks for an image tag:
-          opener: function(openerElement) {
-            // openerElement is the element on which popup was initialized, in this case its <a> tag
-            // you don't need to add "opener" option if this code matches your needs, it's defailt one.
-            return openerElement.is('img') ? openerElement : openerElement.find('img');
-          }
-        }
-          });
-      });
-    }
-
-
-  if ($('.js-zoom-images').length) {
-      $('.js-zoom-images').magnificPopup({
-        type: 'image',
-        mainClass: 'mfp-with-zoom', // this class is for CSS animation below
-
-        zoom: {
-          enabled: true, // By default it's false, so don't forget to enable it
-
-          duration: 300, // duration of the effect, in milliseconds
-          easing: 'ease-in-out', // CSS transition easing function
-
-          // The "opener" function should return the element from which popup will be zoomed in
-          // and to which popup will be scaled down
-          // By defailt it looks for an image tag:
-          opener: function(openerElement) {
-            // openerElement is the element on which popup was initialized, in this case its <a> tag
-            // you don't need to add "opener" option if this code matches your needs, it's defailt one.
-            return openerElement.is('img') ? openerElement : openerElement.find('img');
-          }
-        }
-      });
-
-    }
-
-
-  if ($('.popup-youtube').length) {
-    $('.popup-youtube').magnificPopup({
-        disableOn: 700,
-        type: 'iframe',
-        mainClass: 'mfp-fade',
-        removalDelay: 160,
-        preloader: false,
-
-        fixedContentPos: false
-      });
-  }
-
-
-
-/////////////////////////////////////
-// Select customization
-/////////////////////////////////////
-
-  if ($('.selectpicker').length) {
-    $('.selectpicker').selectpicker();
-  }
-
-
-
-////////////////////////////////////////////
-// Main slider
-///////////////////////////////////////////
-
-
-  if ($('#main-slider').length) {
-
-      var sliderWidth = $("#main-slider").data("slider-width");
-      var sliderHeigth = $("#main-slider").data("slider-height");
-      var sliderArrows = $("#main-slider").data("slider-arrows");
-      var sliderButtons = $("#main-slider").data("slider-buttons");
-
-      $( '#main-slider' ).sliderPro({
-          width:  sliderWidth,
-          height: sliderHeigth,
-          arrows: sliderArrows,
-          buttons: sliderButtons,
-          fade: true,
-          fullScreen: true,
-          touchSwipe: false,
-          autoplay: true
-      });
-  }
-
-
-////////////////////////////////////////////
-// Sliders
-///////////////////////////////////////////
-
-  if ($('.js-slider').length) {
-    $('.js-slider').slick();
-  }
-
-
-////////////////////////////////////////////
-// Sliders with thumbnails
-///////////////////////////////////////////
-
-  if ($('.js-slider-for').length) {
-    $('.js-slider-for').slick({
-      arrows: true,
-      fade: true,
-      asNavFor: '.js-slider-nav'
-    });
-    $('.js-slider-nav').slick({
-      slidesToShow: 5,
-      slidesToScroll: 1,
-      asNavFor: '.js-slider-for',
-      focusOnSelect: true
-    });
-  }
-
-/////////////////////////////////////////////////////////////////
-// Slider numbers
-/////////////////////////////////////////////////////////////////
-
-
-  if ($('#filterPrice').length) {
-
-    var keypressSlider = document.getElementById('filterPrice');
-      var input0 = document.getElementById('input-with-keypress-0');
-      var input1 = document.getElementById('input-with-keypress-1');
-      var inputs = [input0, input1];
-
-      noUiSlider.create(keypressSlider, {
-          start: [5000, 35000],
-          connect: true,
-          step: 100,
-          format: wNumb({
-            decimals: 0,
-            prefix: '$',
-            thousand: ','
-          }),
-          range: {
-              'min': 1000,
-              'max': 50000
-          }
-      });
-
-      keypressSlider.noUiSlider.on('update', function (values, handle) {
-          inputs[handle].value = values[handle];
-      });
-  }
-
-
-  if ($('#sliderRange').length) {
-    var keypressSliderRange = document.getElementById('sliderRange');
-      var inputRange = document.getElementById('input-range');
-      var inputsRange = [inputRange];
-
-    noUiSlider.create(keypressSliderRange, {
-          start: 100,
-          connect: true,
-          step: 10,
-          format: wNumb({
-            decimals: 0,
-            prefix: 'within ',
-            suffix: 'km',
-            thousand: ','
-          }),
-          range: {
-              'min': 0,
-              'max': 200
-          }
-    });
-
-
-      keypressSliderRange.noUiSlider.on('update', function (values, handle) {
-          inputsRange[handle].value = values[handle];
-      });
-    }
-
-
-/////////////////////////////////////
-//  Video player
-/////////////////////////////////////
-
-
-if ($('.player').length) {
-  $(".player").flowplayer();
-}
-
-
-////////////////////////////////////////////
-// View catalog
-///////////////////////////////////////////
-
-
-  $('.btns-switch__item').on( 'click', function() {
-    $('.btns-switch').find('.active').removeClass('active');
-    $( this ).addClass('active');
-  });
-
-  $('.js-view-th').on( 'click', function() {
-    $('.b-goods-group > .col-12').removeClass('col-12').addClass('col-lg-4 col-md-6');
-    $('.b-goods').removeClass('b-goods_list');
-    $('.b-filter-goods').addClass('b-filter-goods_brd');
-  });
-
-  $('.js-view-list').on( 'click', function() {
-    $('.b-goods-group > .col-lg-4').addClass('col-12').removeClass('col-lg-4 col-md-6');
-    $('.b-goods').addClass('b-goods_list');
-    $('.b-filter-goods').removeClass('b-filter-goods_brd');
-  });
-
-
-  $('.flip-btn').on( 'click', function() {
-    $( this ).parent().toggleClass('flip-active');
-  });
-
-
-  $('.flip-btn-hide').on( 'click', function() {
-    $(this).parents('.b-goods').removeClass('flip-active');
-  });
-
-
-  if ($(window).width() < 768) {
-    $('.b-goods-group > .col-12').removeClass('col-12').addClass('col-lg-4 col-md-6');
-    $('.b-goods').removeClass('b-goods_list');
-  }
-
+(function($) {
+	/*==========  background  ==========*/
+	$("[data-background]").each(function() {
+		$(this).css("background-image", "url(" + $(this).attr("data-background") + ")")
+	});
+	/*========== Nice Select ==========*/
+	$('select').niceSelect();	
+	/*==========  Search  ==========*/
+	$('.header__area-menubar-right-box-search-icon.open').on('click', function() {
+		$('.header__area-menubar-right-box-search-box').fadeIn().addClass('active');
+	});
+	$('.header__area-menubar-right-box-search-box-icon').on('click', function() {
+		$(this).fadeIn().removeClass('active');
+	});
+	$('.header__area-menubar-right-box-search-box-icon i').on('click', function() {
+		$('.header__area-menubar-right-box-search-box').fadeOut().removeClass('active');
+	});
+	$('.header__area-menubar-right-box-search-box form').on('click', function(e) {
+		e.stopPropagation();
+	});
+	/*==========  sidebar popup  ==========*/
+	$('.header__area-menubar-right-sidebar-popup-icon i').on("click", function() {
+		$('.header__area-menubar-right-sidebar-popup').addClass('active');
+	});
+	$('.header__area-menubar-right-sidebar-popup .sidebar-close-btn').on("click", function() {
+		$('.header__area-menubar-right-sidebar-popup').removeClass('active');
+	});
+	$('.header__area-menubar-right-sidebar-popup-icon i').on("click", function() {
+		$('.sidebar-overlay').addClass('show');
+	});
+	$('.header__area-menubar-right-sidebar-popup .sidebar-close-btn').on("click", function() {
+		$('.sidebar-overlay').removeClass('show');
+	});
+	// /*========== Responsive Menu  ==========*/
+	$('.menu-responsive').meanmenu({
+		meanMenuContainer: '.responsive-menu',
+		meanScreenWidth: '991',
+		meanMenuOpen: '<span></span><span></span><span></span>',
+		meanMenuClose: '<i class="fal fa-times"></i>'
+	});
+	/*========== menu-bar sticky  ==========*/
+	$(window).on('scroll', function() {
+		var scrollDown = $(window).scrollTop();
+		if(scrollDown < 135) {
+			$(".header__sticky").removeClass("header__sticky-sticky-menu");
+		} else {
+			$(".header__sticky").addClass("header__sticky-sticky-menu");
+		}
+	});	
+/*==========  Toggle menu  ==========*/
+$('.toggle-menu ul').hide();
+$(".toggle-menu a").click(function() {
+	$(this).parent(".toggle-menu").children("ul").slideToggle("100");
+	$(this).find(".change").toggleClass("fal fa-angle-down fal fa-angle-right");
 });
-
+/*==========  isotope  ==========*/
+$(window).on('load', function() {
+	/*========== Project Grid  ==========*/
+	var $grid = $('.deluxe__area-active').isotope({});
+	/*========== Project Filter  ==========*/
+	$('.deluxe__area-btn').on('click', 'li', function() {
+		var filterValue = $(this).attr('data-filter');
+		$grid.isotope({
+			filter: filterValue
+		});
+	});
+	/*========== Project Active  ==========*/
+	$('.deluxe__area-btn').on('click', 'li', function() {
+		$(this).siblings('.active').removeClass('active');
+		$(this).addClass('active');
+	});
+});	
+	/*========== Deluxe Active Hover  ==========*/
+	$(".deluxe__area-item").hover(function() {
+		$(".deluxe__area-item").removeClass("deluxe__area-item-hover");
+		$(this).addClass("deluxe__area-item-hover");
+	});
+	/*========== Blog Active Hover  ==========*/
+	$(".blog__area-item").hover(function() {
+		$(".blog__area-item").removeClass("blog__area-item-hover");
+		$(this).addClass("blog__area-item-hover");
+	});
+	/*==========  counterUp  ==========*/
+	var counter = $('.counter');
+	counter.counterUp({
+		time: 2500,
+		delay: 100
+	});
+	/*==========  video-popup  ==========*/
+	$('.video-popup').magnificPopup({
+		type: 'iframe'
+	});
+	/*==========  img-popup  ==========*/
+	$('.img-popup').magnificPopup({
+		type: 'image',
+		gallery: {
+			enabled: true
+		}
+	});
+	/*==========  Testimonial Two  ==========*/
+	var swiper = new Swiper(".testimonial__slider", {
+		slidesPerView: 1,
+		loop: true,
+		speed: 1000,
+		spaceBetween: 30,
+		pagination: {
+			el: ".pagination",
+			clickable: true,
+		},
+	});	
+	/*==========  Brand  ==========*/
+	var swiper = new Swiper(".band__slider", {
+		loop: true,
+		speed: 1500,
+		spaceBetween: 30,
+		autoplay: {
+			delay: 3500,
+		},
+		breakpoints: {
+			0: {
+				slidesPerView: 2
+			},
+			575: {
+				slidesPerView: 4
+			},
+			992: {
+				slidesPerView: 5
+			},
+			1200: {
+				slidesPerView: 6
+			},
+		}
+	});
+	/*========== FAQ  ==========*/
+	$(".room__details-right-faq-item-card-header").click(function() {
+		if($(this).next(".room__details-right-faq-item-card-header-content").hasClass("active")) {
+			$(this).next(".room__details-right-faq-item-card-header-content").removeClass("active").slideUp()
+			$(this).children("i").removeClass("far fa-long-arrow-up").addClass("far fa-long-arrow-down")
+		} else {
+			$(".room__details-right-faq-item-card-header-content").removeClass("active").slideUp()
+			$(".room__details-right-faq-item-card-header i").removeClass("far fa-long-arrow-up").addClass("far fa-long-arrow-down");
+			$(this).next(".room__details-right-faq-item-card-header-content").addClass("active").slideDown()
+			$(this).children("i").removeClass("far fa-long-arrow-down").addClass("far fa-long-arrow-up")
+		}
+	});		
+	/*==========  theme loader  ==========*/
+	$(window).on("load", function() {
+		$(".theme-loader").fadeOut(500);
+	});
+	/*==========  Banner Slider  ==========*/
+	if(jQuery(".banner-slider").length > 0) {
+		let sliderActive1 = '.banner-slider';
+		let sliderInit1 = new Swiper(sliderActive1, {
+			slidesPerView: 1,
+			effect: 'fade',
+			loop: true,
+			effect: 'fade',
+			autoplay: {
+				delay: 5500,
+			},
+			pagination: {
+				el: ".pagination",
+				clickable: true,
+			},
+		});
+		function animated_swiper(selector, init) {
+			let animated = function animated() {
+				$(selector + ' [data-animation]').each(function() {
+					let anim = $(this).data('animation');
+					let delay = $(this).data('delay');
+					let duration = $(this).data('duration');
+					$(this).removeClass('anim' + anim).addClass(anim + ' animated').css({
+						webkitAnimationDelay: delay,
+						animationDelay: delay,
+						webkitAnimationDuration: duration,
+						animationDuration: duration
+					}).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+						$(this).removeClass(anim + ' animated');
+					});
+				});
+			};
+			animated();
+			init.on('slideChange', function() {
+				$(sliderActive1 + ' [data-animation]').removeClass('animated');
+			});
+			init.on('slideChange', animated);
+		}
+		animated_swiper(sliderActive1, sliderInit1);
+	};
+	/*========== scroll to top  ==========*/
+	var scrollPath = document.querySelector('.scroll-up path');
+	var pathLength = scrollPath.getTotalLength();
+	scrollPath.style.transition = scrollPath.style.WebkitTransition = 'none';
+	scrollPath.style.strokeDasharray = pathLength + ' ' + pathLength;
+	scrollPath.style.strokeDashoffset = pathLength;
+	scrollPath.getBoundingClientRect();
+	scrollPath.style.transition = scrollPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
+	var updatescroll = function() {
+		var scroll = $(window).scrollTop();
+		var height = $(document).height() - $(window).height();
+		var scroll = pathLength - (scroll * pathLength / height);
+		scrollPath.style.strokeDashoffset = scroll;
+	}
+	updatescroll();
+	$(window).scroll(updatescroll);
+	var offset = 50;
+	var duration = 950;
+	jQuery(window).on('scroll', function() {
+		if(jQuery(this).scrollTop() > offset) {
+			jQuery('.scroll-up').addClass('active-scroll');
+		} else {
+			jQuery('.scroll-up').removeClass('active-scroll');
+		}
+	});
+	jQuery('.scroll-up').on('click', function(event) {
+		event.preventDefault();
+		jQuery('html, body').animate({
+			scrollTop: 0
+		}, duration);
+		return false;
+	});
+})(jQuery);
